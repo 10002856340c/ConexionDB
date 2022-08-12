@@ -265,13 +265,21 @@ public void mostrarDatos(){
         //cuando el usuario de click 
         //en java cuando se hace un click java lo interpreta como un 1 
         if(evt.getClickCount()==1){
-            
+           //hacemos una instancia del objeto receptor en el cual llamamos a una clase que esta en la libreria JTable
+           
+           /* JTable receptor = (JTable) evt.getSource(); -- esta funcion permite que cuando el usuario le da click al las tablas 
+           se puedan editar y agregar a la base de datos 
+           */
             JTable receptor = (JTable) evt.getSource();
             
+            /*acontinuacion lo que estamos haciendo que cuando el usuario de click y modifiue los datos , se apliquen los cambios
+            esta informacion la ubica por medio de indices 0,1,2
+            
+            */
             txtId.setText(receptor.getModel().getValueAt(receptor.getSelectedRow(),0).toString());
-            
-            
-           
+            txtNombre.setText(receptor.getModel().getValueAt(receptor.getSelectedRow(),1).toString());
+            txtCorreo.setText(receptor.getModel().getValueAt(receptor.getSelectedRow(),2).toString());
+
        }
     }//GEN-LAST:event_tblEmpleadosMouseClicked
 
