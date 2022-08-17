@@ -21,7 +21,14 @@ public class frmEmpleados2 extends javax.swing.JFrame {
         mostrarDatos();
     }
     // creamos un metodo void 
+    
+    
 public void mostrarDatos(){
+    /*ESTE BUCLE ES PARA CADA VEZ QUE EL USUARIO INGRESE DATOS , BORRE O CARGE SE ACTUALIZE
+    EL NUMERO DE FILAS DE NUESTRA  TABLA DE NUESTRA INTERFAZ */
+    while(modelo.getRowCount()>0){
+        modelo.removeRow(0);
+    }
     //Hacemos una instancia del metodo  ConexionBD
     ConexionBD conexion=new ConexionBD();
      try{
@@ -221,6 +228,9 @@ public void mostrarDatos(){
         String sentenciasql=String.format ("INSERT INTO empleados (Id, Nombre ,Correo)"+"VALUES(NULL,'%s','%s')",objetoEmpleados.getNombre(),objetoEmpleados.getCorreo());
         
          conexion.ejecutaSentenciaSQL(sentenciasql);
+         
+         //para actualizar cada vez que el usuario ingrese datos
+         this.mostrarDatos();
        
         
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -249,11 +259,39 @@ public void mostrarDatos(){
      //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
     
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        //creamos un objeto de la instancia ConexionBD
+        ConexionBD conexion=new ConexionBD();
+        
+        /*creamos un objeto de la clase empleadosBL donde estan nuestros atributos Nombre y Correo , y almacenamos  el metodo RecuperarDatosGUI ()
+        en el cual nos retorna los atributos modificados por medio se los setter que ingresa el ususario
+        */
+        empleadosBL objetoEmpleados=RecuperarDatosGUI ();
+        //hacemos una variable  de tipo string en el cual va hacer un format en el cual ponemos nuestra sentensia sql para editar 
+        String sentenciasqlEditar=String.format ("UPDATE empleados SET Nombre = '%s' ,"+" Correo = '%s'  WHERE  Id = '%d' ",objetoEmpleados.getNombre(),objetoEmpleados.getCorreo(),objetoEmpleados.getId());
+         conexion.ejecutaSentenciaSQL(sentenciasqlEditar);
+       
+         
+         //para actualizar cada vez que el usuario ingrese datos
+         this.mostrarDatos();
+       
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        // TODO add your handling code here:
+        //creamos un objeto de la instancia ConexionBD
+        ConexionBD conexion=new ConexionBD();
+        
+        /*creamos un objeto de la clase empleadosBL donde estan nuestros atributos Nombre y Correo , y almacenamos  el metodo RecuperarDatosGUI ()
+        en el cual nos retorna los atributos modificados por medio se los setter que ingresa el ususario
+        */
+        empleadosBL objetoEmpleados=RecuperarDatosGUI ();
+        
+        String sentenciasqlBorrar=String.format ("DELETE FROM empleados WHERE id = %d ",objetoEmpleados.getId());
+        
+         conexion.ejecutaSentenciaSQL(sentenciasqlBorrar);
+         
+         //para actualizar cada vez que el usuario ingrese datos
+         this.mostrarDatos();
+       
     }//GEN-LAST:event_btnBorrarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
